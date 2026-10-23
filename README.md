@@ -18,13 +18,23 @@ Only that exact release of the disc is accepted; other discs are refused.
 1. Download `TheBortas-windows-x64.zip` from
    [Releases](https://github.com/luquimarti/TheBortas/releases) and extract it
    anywhere you can write to (settings and saves are kept in that folder).
-2. Put your BIOS image in `roms/ipl/`.
-3. Run `TheBortas.exe` and select your disc image.
-4. The first time, TheBortas prepares the game for your PC: it reads the code
-   from your disc, recompiles it and builds `recomp/MK-81022.dll`. This takes a
-   few minutes and happens only once.
+2. Run `TheBortas.exe`. It walks you through three steps:
+   1. **BIOS**: select your Saturn BIOS file. It must be a North American /
+      European BIOS (or a region-free one); TheBortas checks it and copies it
+      to `roms/ipl/`.
+   2. **Disc**: select your PDZ II (USA) disc image. Any other disc is refused.
+   3. **Prepare**: TheBortas reads the code from your disc, recompiles it and
+      builds `recomp/MK-81022.dll`. This takes a few minutes and happens only
+      once.
 
 After that, double-click `TheBortas.exe` and play.
+
+## In game
+
+Press **Esc** (or the Guide button on the controller) for the game menu:
+full screen, aspect ratio (16:9 or the original 4:3), frame rate counter,
+real transparency, volume, controls, and **Advanced**, which brings back all of
+the emulator's menus and settings.
 
 ## Defaults
 
@@ -34,7 +44,6 @@ After that, double-click `TheBortas.exe` and play.
 - Saturn 3D Control Pad on port 1, mapped to an Xbox-style controller
 - Frame rate and the share of native code are shown on screen (Shift+F1)
 
-All of Ymir's settings remain available (F10).
 
 ## What's in the package
 
