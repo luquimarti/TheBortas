@@ -1,0 +1,141 @@
+# Builds TheBortas for Windows: the Ymir frontend with Drydock in ship mode,
+# packaged with the recipe, default settings, the DirectX shader compiler and
+# the bundled Clang/LLD that recompile the game on the player's machine.
+#
+# Run it from the Actions tab, or push a tag (v0.1.0, ...) to publish a release.
+# Third-party actions are pinned by commit.
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  # DirectX Shader Compiler v1.9.2609 (x64), mirrored in the Ymir fork's releases
+  DXC_URL: https://github.com/luquimarti/YmirRCMP/releases/download/dxc-v1.9.2609
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 180
+    env:
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg_cache,readwrite"
+      YMIR: external/drydock/external/Ymir
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          submodules: recursive
+
+      - uses: glslang/setup-masm@bd171b9b0a619ff6237c164fab5fb920cc579889 # v1.4
+      - uses: TheMrMilchmann/setup-msvc-dev@79dac248aac9d0059f86eae9d8b5bfab4e95e97c # v4.0.0
+        with:
+          arch: x64
+
+      - name: Bootstrap vcpkg
+        run: external/drydock/external/Ymir/vcpkg/bootstrap-vcpkg.bat -disableMetrics
+
+      - name: Restore vcpkg packages
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/vcpkg_cache
+          key: vcpkg-x64-win-llvm-avx2-${{ hashFiles('external/drydock/external/Ymir/vcpkg.json', 'external/drydock/external/Ymir/vcpkg-configuration.json', 'external/drydock/external/Ymir/vcpkg-triplets/**') }}
+
+      # Ymir's presets set toolset=ClangCL, which only Visual Studio accepts with Ninja
+      - name: Configure
+        shell: bash
+        run: |
+          DRYDOCK="$(cygpath -m "$GITHUB_WORKSPACE/external/drydock")"
+          cd $YMIR
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake \
+            -DVCPKG_TARGET_TRIPLET=x64-win-llvm-avx2-static-md -DBUILD_SHARED_LIBS=OFF -DYmir_AVX2=ON \
+            -DYmir_ENABLE_TESTS=OFF -DYmir_ENABLE_SANDBOX=OFF -DYmir_ENABLE_YMDASM=OFF \
+            -DYmir_ENABLE_DEVLOG=OFF -DYmir_ENABLE_DEV_ASSERTIONS=OFF -DYmir_ENABLE_UPDATE_CHECKS=OFF \
+            "-DYMIR_RECOMP_ROOT=$DRYDOCK"
+
+      - name: Save vcpkg packages
+        if: always()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/vcpkg_cache
+          key: vcpkg-x64-win-llvm-avx2-${{ hashFiles('external/drydock/external/Ymir/vcpkg.json', 'external/drydock/external/Ymir/vcpkg-configuration.json', 'external/drydock/external/Ymir/vcpkg-triplets/**') }}
+        continue-on-error: true
+
+      - name: Build
+        shell: bash
+        run: cmake --build $YMIR/build --target ymir-sdl3
+
+      - name: Package
+        shell: bash
+        run: |
+          set -e
+          P=pkg/TheBortas
+          mkdir -p $P/ship $P/tools/llvm $P/roms/ipl $P/licenses
+          cp $YMIR/build/apps/ymir-sdl3/ymir-sdl3.exe $P/TheBortas.exe
+          cp ship/recipe.toml ship/trace.txt $P/ship/
+          cp defaults/Ymir.toml $P/Ymir.toml
+          cp package/roms-ipl-README.txt $P/roms/ipl/README.txt
+          cp README.md $P/README.md
+
+          # Clang + LLD that recompile the game on the player's machine
+          LLVM_BIN="/c/Program Files/LLVM/bin"
+          cp "$LLVM_BIN/clang.exe" "$LLVM_BIN/lld-link.exe" $P/tools/llvm/
+          LLVM_VER="$("$LLVM_BIN/clang.exe" --version | head -1 | sed -E 's/.*version ([0-9.]+).*/\1/')"
+          echo "LLVM $LLVM_VER" | tee $P/tools/llvm/VERSION.txt
+          curl -fsSL -o $P/licenses/LLVM-LICENSE.txt "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-$LLVM_VER/llvm/LICENSE.TXT"
+
+          # Direct3D 12 shader compiler, checked against known hashes
+          for f in dxcompiler.dll dxil.dll; do curl -fsSL -o $P/$f "$DXC_URL/$f"; done
+          mkdir -p $P/licenses/dxc
+          for f in LICENSE-MS.txt LICENSE-LLVM.txt LICENCE-MIT.txt; do curl -fsSL -o $P/licenses/dxc/$f "$DXC_URL/$f"; done
+          (cd $P && sha256sum -c - <<'SUMS'
+          0689e2fee0a1c9df8662a59680469f24e2a3ad7ce6bbbcc9284f7a83172bfc59  dxcompiler.dll
+          64be2368211d257a038a7d4ea6bb3e24c878eb8d588c7b8414fccf759b69c2ac  dxil.dll
+          734f72f239fe7b07b4c7203f294c1a7ce27095687278bab7e56d630d7c672963  licenses/dxc/LICENSE-MS.txt
+          729615317e28dd03907e46f0fc3b5e88f7853cee61d1a1471d2749335516b46f  licenses/dxc/LICENSE-LLVM.txt
+          903df5512f7d02609fed0c780a9b704f5a3eeb6e4d84ebe42a29845c81899a3c  licenses/dxc/LICENCE-MIT.txt
+          SUMS
+          )
+
+          cp LICENSE $P/licenses/TheBortas-LICENSE.txt
+          cp external/drydock/LICENSE $P/licenses/Drydock-LICENSE.txt
+          cp $YMIR/LICENSE $P/licenses/Ymir-LICENSE.txt
+
+      # The bundled compiler must be able to build a game library with nothing
+      # else installed: compile and link a tiny freestanding DLL with it.
+      - name: Check bundled compiler
+        shell: bash
+        run: |
+          set -e
+          export MSYS_NO_PATHCONV=1 # keep lld-link's /options as they are
+          T=$RUNNER_TEMP/cc && mkdir -p $T/ymir_recomp
+          cp external/drydock/runtime/include/ymir_recomp/abi.h $T/ymir_recomp/
+          printf '#include <ymir_recomp/abi.h>\nDRYDOCK_EXPORT int drydock_abi_version() { return DRYDOCK_ABI_VERSION; }\n' > $T/t.cpp
+          pkg/TheBortas/tools/llvm/clang.exe --target=x86_64-pc-windows-msvc -std=c++17 -O1 -ffreestanding \
+            -fno-exceptions -fno-rtti -nostdinc -nostdinc++ -mno-stack-arg-probe -DDRYDOCK_FREESTANDING \
+            -DDRYDOCK_BUILD_LIBRARY -I$T -c $T/t.cpp -o $T/t.obj
+          pkg/TheBortas/tools/llvm/lld-link.exe /dll /noentry /nodefaultlib /noimplib /machine:x64 /out:$T/t.dll $T/t.obj
+          ls -la $T/t.dll
+
+      - name: Zip
+        shell: pwsh
+        run: Compress-Archive -Path pkg/TheBortas -DestinationPath TheBortas-windows-x64.zip
+
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: TheBortas-windows-x64
+          path: TheBortas-windows-x64.zip
+          retention-days: 14
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" TheBortas-windows-x64.zip --title "TheBortas $GITHUB_REF_NAME" --notes-file README.md

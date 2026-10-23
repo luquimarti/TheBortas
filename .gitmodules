@@ -1,0 +1,3 @@
+[submodule "external/drydock"]
+	path = external/drydock
+	url = https://github.com/luquimarti/Drydock.git

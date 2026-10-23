@@ -1,0 +1,16 @@
+# Never commit firmware, disc images, files extracted from a disc, or code
+# generated from a game.
+bios/
+roms/
+disks/
+recomp/
+*.bin
+*.cue
+*.iso
+*.chd
+*.ccd
+*.img
+*.PRG
+build*/
+out/
+pkg/

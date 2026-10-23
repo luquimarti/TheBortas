@@ -1,0 +1,117 @@
+# Drydock recipe for TheBortas: PDZ II (USA).
+#
+# No game data here: only which files on the disc hold SH-2 code, where the
+# game loads them, their SHA-256 hashes (only this exact version of the disc
+# is accepted) and control-transfer addresses recorded while playing.
+
+ship = "TheBortas"
+title = "PDZ II"
+region = "USA"
+product = "MK-81022"
+trace = "trace.txt"
+
+[[module]]
+file = "1ST_READ.PRG"
+base = 0x06008000
+sha256 = "bea6689d91555667e5ba3567701b6ee7a018e4c8417cdf52295f26f37b4489fd"
+trace = true
+
+[[module]]
+file = "TITLE.PRG"
+base = 0x06080000
+sha256 = "81eeb0674bcb3d6611740f2df19475afd7d889785045856be3d19527c9efb2ca"
+
+[[module]]
+file = "EPISODE0.PRG"
+base = 0x06080000
+sha256 = "b44df91e7dfbfd98a327e03a6b8e7ab4eab620b3d43760589782087017069832"
+
+[[module]]
+file = "EPISODE1.PRG"
+base = 0x06080000
+sha256 = "8bfcd3d3b5942fef1674a29db0f95d10f449304bb986c6044f3dea18633881e3"
+
+[[module]]
+file = "EPISODE2.PRG"
+base = 0x06080000
+sha256 = "1befe71ce7d9fb27c56a9b076c383466aa5c6b800162e3b51d81e38706dd9ab4"
+
+[[module]]
+file = "EPISODE3.PRG"
+base = 0x06080000
+sha256 = "e122aa41358b3e5b5472c6eec783570e1ade22e20411ebd2863bbecd8d579b14"
+
+[[module]]
+file = "EPISODE4.PRG"
+base = 0x06080000
+sha256 = "dc4952bda8169ce021048915a3361b85c05661a01c24aabce7743000b6e361c2"
+
+[[module]]
+file = "EPISODE5.PRG"
+base = 0x06080000
+sha256 = "9a4f8b2b7fb9884bb0aa107a58b1b5ad9e2e15938284d8b06d10902fe4b2e861"
+
+[[module]]
+file = "EPISODE6.PRG"
+base = 0x06080000
+sha256 = "b544947658d3ca992a193e830a13e3a0b9c708bfc8111f05e9677bcf10646900"
+
+[[module]]
+file = "EPISODE7.PRG"
+base = 0x06080000
+sha256 = "983cac1d6cda69b50306a60ac733bee9daa160024645ab481f88b2e3745e006e"
+
+[[module]]
+file = "INTER12.PRG"
+base = 0x06080000
+sha256 = "d61b04bd8e9d2f8db26c62f484eb1d1941024f7e2828cd54566b4963aa9f1c2b"
+
+[[module]]
+file = "INTER23.PRG"
+base = 0x06080000
+sha256 = "e44fec6f8fe22927517212ec78ec3ee6ac0aa4eb2e1019b82afacc8a5945ad93"
+
+[[module]]
+file = "INTER45.PRG"
+base = 0x06080000
+sha256 = "1612fb0c1b5bc621e3d6937e8082696373f68dbc80fce4f1e656aa140e1822f8"
+
+[[module]]
+file = "INTER56.PRG"
+base = 0x06080000
+sha256 = "b3700ad4e2f8be0636c8e7cf118623bff760922b80c8235a6e610d0d5c555fe9"
+
+[[module]]
+file = "INTER67.PRG"
+base = 0x06080000
+sha256 = "290e2abf2391d5f3650d2eadf386c2df23ffc47023dcdccbfc1890914a256933"
+
+[[module]]
+file = "STAFFA.PRG"
+base = 0x06080000
+sha256 = "ad01f2c5ba01d0d339f280c3b72cb8813e9bf368dc9b07a48ce8c1c7470341f6"
+
+[[module]]
+file = "STAFFB.PRG"
+base = 0x06080000
+sha256 = "998a276692637aaffa3786e772ede2bacd3d4882eaec2d87cfb300ba94c5c0d5"
+
+[[module]]
+file = "STAFFC.PRG"
+base = 0x06080000
+sha256 = "e32a7fe6e2b3af79fedd38f9fbb99e77f593cc1c4ad5fba343d1c7cc3b9de870"
+
+[[module]]
+file = "STAFFD.PRG"
+base = 0x06080000
+sha256 = "135b16cdb0c8a136b98eae1ed70cb4e446be4df087176e63c637eb51347fbc67"
+
+[[module]]
+file = "STAFFE.PRG"
+base = 0x06080000
+sha256 = "f4eebc5a935db1fa8252e175430eb00a9f4ded9889cfc154d20627a78b4b8251"
+
+[[module]]
+file = "SEGALOGO.PRG"
+base = 0x06080000
+sha256 = "972aff54c36dc070918df631b1937a062b3ddde0aabdc5b8d8750af6ab53374a"
