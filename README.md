@@ -5,6 +5,7 @@
 [![Latest release](https://img.shields.io/github/v/release/luquimarti/TheBortas?label=release)](https://github.com/luquimarti/TheBortas/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/luquimarti/TheBortas/total)](https://github.com/luquimarti/TheBortas/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
+[![Made in Argentina](https://img.shields.io/badge/made%20in-Argentina%20%F0%9F%87%A6%F0%9F%87%B7-74ACDF)](#)
 
 TheBortas is the first **ship** to leave the Drydock shipyard.
 
@@ -107,3 +108,7 @@ keep their own licenses (`licenses/`).
 
 This is a non-commercial fan project. It is not affiliated with or endorsed by
 the publisher or the hardware maker; all trademarks belong to their owners.
+
+---
+
+🇦🇷 Made in Argentina.
