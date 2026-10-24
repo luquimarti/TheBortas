@@ -1,0 +1,35 @@
+name: Bug report
+description: Something broke, looks wrong or runs slow
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where and how
+      description: Which episode or screen, and what you were doing right before it happened.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: TheBortas version
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: System
+      placeholder: Windows 11, RTX 3060, Xbox controller
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: If you can, include one with the on-screen counters visible (Shift+F1).
