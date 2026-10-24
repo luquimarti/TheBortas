@@ -457,7 +457,7 @@ UseFullRefreshRateWithVideoSync = false
 UseHardwareAcceleration = true
 
     [Video.Enhancements]
-    DynamicResolution = false
+    DynamicResolution = true
     InternalResolution = 4
     Deinterlace = false
     TransparentMeshes = false

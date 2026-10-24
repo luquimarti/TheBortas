@@ -60,7 +60,8 @@ Press **Esc** (or the Guide button on the controller) for the game menu:
 
 ## Defaults
 
-- Video by GPU (Direct3D 12) at 4x internal resolution, 16:9, full screen
+- Video by GPU (Direct3D 12) at 4x internal resolution (lowered
+  automatically when a scene needs it, then raised again), 16:9, full screen
   (Alt+Enter toggles). Hi-res screens such as menus render at half the factor,
   so the output size stays the same
 - Original mesh transparency (the "real transparency" enhancement is off: it
