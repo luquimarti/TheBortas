@@ -161,8 +161,8 @@ PeripheralType = 'AnalogPad'
 
     [Input.Port1.AnalogPad.Binds]
     A = [ 'GamepadX@0' ]
-    AnalogL = [ 'GamepadLeftTrigger@0' ]
-    AnalogR = [ 'GamepadRightTrigger@0' ]
+    AnalogL = []
+    AnalogR = []
     AnalogStick = [ 'GamepadLeftStick@0' ]
     B = [ 'GamepadA@0' ]
     C = [ 'GamepadB@0' ]
@@ -448,7 +448,7 @@ ForceIntegerScaling = false
 ForcedAspect = '16:9'
 FullScreen = true
 GraphicsAdapter = ''
-GraphicsBackend = 'SDLRenderer'
+GraphicsBackend = 'Direct3D12'
 ReduceLatency = true
 Rotation = 'Normal'
 SyncInFullscreenMode = true
@@ -457,6 +457,8 @@ UseFullRefreshRateWithVideoSync = false
 UseHardwareAcceleration = true
 
     [Video.Enhancements]
+    DynamicResolution = false
+    InternalResolution = 4
     Deinterlace = false
     TransparentMeshes = false
 

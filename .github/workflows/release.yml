@@ -31,6 +31,14 @@ jobs:
         with:
           submodules: recursive
 
+      # Ship identity in the executable: icon and version info (Explorer's description)
+      - name: Ship icon and version info
+        shell: bash
+        run: |
+          cp package/icon.ico "$YMIR/apps/ymir-sdl3/res/ymir.ico"
+          bash package/set-exe-info.sh "$YMIR/apps/ymir-sdl3/res/ymir.rc"
+          grep VALUE "$YMIR/apps/ymir-sdl3/res/ymir.rc"
+
       - uses: glslang/setup-masm@bd171b9b0a619ff6237c164fab5fb920cc579889 # v1.4
       - uses: TheMrMilchmann/setup-msvc-dev@79dac248aac9d0059f86eae9d8b5bfab4e95e97c # v4.0.0
         with:
@@ -57,6 +65,7 @@ jobs:
             -DVCPKG_TARGET_TRIPLET=x64-win-llvm-avx2-static-md -DBUILD_SHARED_LIBS=OFF -DYmir_AVX2=ON \
             -DYmir_ENABLE_TESTS=OFF -DYmir_ENABLE_SANDBOX=OFF -DYmir_ENABLE_YMDASM=OFF \
             -DYmir_ENABLE_DEVLOG=OFF -DYmir_ENABLE_DEV_ASSERTIONS=OFF -DYmir_ENABLE_UPDATE_CHECKS=OFF \
+            -DYmir_FF_ENABLE_UNIMPL_GFX_BACKENDS=OFF \
             "-DYMIR_RECOMP_ROOT=$DRYDOCK"
 
       - name: Save vcpkg packages
@@ -78,7 +87,7 @@ jobs:
           P=pkg/TheBortas
           mkdir -p $P/ship $P/tools/llvm $P/roms/ipl $P/licenses
           cp $YMIR/build/apps/ymir-sdl3/ymir-sdl3.exe $P/TheBortas.exe
-          cp ship/recipe.toml ship/trace.txt $P/ship/
+          cp ship/recipe.toml ship/trace.txt ship/icon.png $P/ship/
           cp defaults/Ymir.toml $P/Ymir.toml
           cp package/roms-ipl-README.txt $P/roms/ipl/README.txt
           cp README.md $P/README.md

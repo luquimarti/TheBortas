@@ -48,17 +48,25 @@ After that, double-click `TheBortas.exe` and play.
 
 ## While playing
 
-Press **Esc** (or the Guide button on the controller) for the menu: full
-screen, aspect ratio (16:9 or the original 4:3), frame rate counter, real
-transparency, volume, controls, and **Advanced**, which brings back all of the
-emulator's menus and settings.
+Press **Esc** (or the Guide button on the controller) for the game menu:
+
+- full screen, aspect ratio (16:9 or the original 4:3), frame rate counter,
+  real transparency, volume
+- **internal resolution** (1x to 4x, needs video by GPU), with an optional
+  "lower automatically to keep full speed"; takes effect after restarting
+- **Controls...** and **Advanced settings...** (the emulator's full settings
+  window); a checkbox brings back the emulator's menu bar
+- **Restart game** (asks first), **About**, **Quit**
 
 ## Defaults
 
-- Video by GPU (Direct3D 12), 16:9, full screen (Alt+Enter toggles)
+- Video by GPU (Direct3D 12) at 4x internal resolution, 16:9, full screen
+  (Alt+Enter toggles). Hi-res screens such as menus render at half the factor,
+  so the output size stays the same
 - Original mesh transparency (the "real transparency" enhancement is off: it
   is experimental and can crash)
-- Saturn 3D Control Pad on port 1, mapped to an Xbox-style controller
+- Saturn 3D Control Pad on port 1, mapped to an Xbox-style controller; the
+  analog triggers are not mapped (the game expects digital L/R)
 - Frame rate and the share of native code are shown on screen (Shift+F1)
 
 ## What's in the package
@@ -66,7 +74,7 @@ emulator's menus and settings.
 | File | |
 |---|---|
 | `TheBortas.exe` | Ymir with Drydock, in ship mode |
-| `ship/recipe.toml`, `ship/trace.txt` | which disc files hold code, where they load, their hashes, recorded addresses (no copyrighted data) |
+| `ship/recipe.toml`, `ship/trace.txt`, `ship/icon.png` | which disc files hold code, where they load, their hashes, recorded addresses (no copyrighted data) |
 | `tools/llvm/` | Clang and LLD, used once to build the native code |
 | `dxcompiler.dll`, `dxil.dll` | Microsoft DirectX Shader Compiler |
 | `licenses/` | licenses of everything above |
@@ -74,9 +82,8 @@ emulator's menus and settings.
 ## Coming next
 
 Planned in Drydock, and coming to TheBortas as they land: a modding / hook
-system, image filters such as scanlines, higher internal resolution and true
-widescreen. Follow [Drydock](https://github.com/luquimarti/Drydock) for
-progress.
+system, image filters such as scanlines and true widescreen. Follow
+[Drydock](https://github.com/luquimarti/Drydock) for progress.
 
 ## Feedback
 
@@ -87,8 +94,9 @@ on-screen counters (Shift+F1) helps a lot.
 
 ## Support
 
-If you'd like to support this project, see
-[Drydock](https://github.com/luquimarti/Drydock).
+Drydock's recompilation is made with the help of AI. If you want more ships,
+you can support the project on [Patreon](https://www.patreon.com/cw/luquimarti),
+or see [Drydock](https://github.com/luquimarti/Drydock).
 
 ## Building
 
