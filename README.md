@@ -104,11 +104,6 @@ See `.github/workflows/release.yml`: it builds the Ymir fork
 (`external/drydock/external/Ymir`) with `-DYMIR_RECOMP_ROOT=external/drydock`
 and packages the result.
 
-## Why "TheBortas"?
-
-Every Drydock ship is named after a starship. The Bortas is a Klingon flagship:
-a fitting name for a voyage on dragonback.
-
 ## License
 
 GPLv3 (see `LICENSE`), like Ymir and Drydock. Bundled third-party components
