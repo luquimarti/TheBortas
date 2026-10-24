@@ -5,7 +5,6 @@
 [![Latest release](https://img.shields.io/github/v/release/luquimarti/TheBortas?label=release)](https://github.com/luquimarti/TheBortas/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/luquimarti/TheBortas/total)](https://github.com/luquimarti/TheBortas/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
-[![Patreon](https://img.shields.io/badge/Patreon-support-F96854?logo=patreon&logoColor=white)](https://www.patreon.com/cw/luquimarti)
 
 TheBortas is the first **ship** to leave the Drydock shipyard.
 
@@ -87,10 +86,8 @@ on-screen counters (Shift+F1) helps a lot.
 
 ## Support
 
-TheBortas and Drydock are free and open source, and they will stay that way.
-If you'd like to help fund development time, you can support the project on
-**[Patreon](https://www.patreon.com/cw/luquimarti)**. There are no rewards or
-early access, just thanks.
+If you'd like to support this project, see
+[Drydock](https://github.com/luquimarti/Drydock).
 
 ## Building
 
